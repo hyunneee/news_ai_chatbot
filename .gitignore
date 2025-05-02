@@ -3,8 +3,10 @@
 # 환경 변수 파일
 .env
 .env2
+secrets.toml
 
 *.txt
+!requirements.txt
 test.py
 news_qa_chatbot copy.py
 

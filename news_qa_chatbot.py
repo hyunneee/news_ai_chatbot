@@ -36,38 +36,42 @@ if selected:
     title = titles[idx]
     press = presses[idx]
     link = links[idx]
-    news_text, date = extract_news(link)
 
-    # 기사 선택 변경 시 입력 초기화
-    if "last_selected" not in st.session_state or st.session_state.last_selected != selected:
-        st.session_state.last_selected = selected
-        st.session_state.question = ""
-        st.session_state.response = ""
+    if link == "링크 없음":
+        st.warning("❗ 해당 뉴스는 링크를 가져올 수 없어 내용을 불러올 수 없습니다.")
+    else:
+        news_text, date = extract_news(link)
 
-    st.subheader(f"📌 {title}")
-    st.markdown(f"🗓️ {date} | 🏷️ {press}")
-    with st.expander("📰 기사 전문 보기"):
-        st.write(news_text)
+        # 기사 선택 변경 시 입력 초기화
+        if "last_selected" not in st.session_state or st.session_state.last_selected != selected:
+            st.session_state.last_selected = selected
+            st.session_state.question = ""
+            st.session_state.response = ""
 
-    user_input = st.text_input("궁금한 점을 입력하세요 (예: 요약해줘)", key="question")
+        st.subheader(f"📌 {title}")
+        st.markdown(f"🗓️ {date} | 🏷️ {press}")
+        with st.expander("📰 기사 전문 보기"):
+            st.write(news_text)
 
-    if user_input and user_input != st.session_state.get("last_input", ""):
-        st.session_state.last_input = user_input  # 이전 질문 저장
-    # GPT 호출 로직 실행
-    # if user_input and not st.session_state.get("response"):
-        with st.spinner("🤖 GPT가 답변 중입니다..."):
-            try:
-                completion = client.chat.completions.create(
-                    model="gpt-3.5-turbo",
-                    messages=[
-                        {"role": "system", "content": "너는 사용자 질문에 간결하고 친절하게 요약/답변해주는 금융 뉴스 챗봇이야. 답변은 5문장 이내로 해줘."},
-                         {"role": "user", "content": f"다음 뉴스 내용을 참고해서 질문에 답해줘:\n\n{news_text}\n\n질문: {user_input}"}
-                    ]
-                )
-                st.session_state.response = completion.choices[0].message.content
-            except Exception as e:
-                st.session_state.response = f"❌ 오류 발생: {str(e)}"
+        user_input = st.text_input("궁금한 점을 입력하세요 (예: 요약해줘)", key="question")
 
-    if st.session_state.get("response"):
-        st.success("🧠 GPT의 답변")
-        st.write(st.session_state.response)
+        if user_input and user_input != st.session_state.get("last_input", ""):
+            st.session_state.last_input = user_input  # 이전 질문 저장
+        # GPT 호출 로직 실행
+        # if user_input and not st.session_state.get("response"):
+            with st.spinner("🤖 GPT가 답변 중입니다..."):
+                try:
+                    completion = client.chat.completions.create(
+                        model="gpt-3.5-turbo",
+                        messages=[
+                            {"role": "system", "content": "너는 사용자 질문에 간결하고 친절하게 요약/답변해주는 금융 뉴스 챗봇이야. 답변은 5문장 이내로 해줘."},
+                            {"role": "user", "content": f"다음 뉴스 내용을 참고해서 질문에 답해줘:\n\n{news_text}\n\n질문: {user_input}"}
+                        ]
+                    )
+                    st.session_state.response = completion.choices[0].message.content
+                except Exception as e:
+                    st.session_state.response = f"❌ 오류 발생: {str(e)}"
+
+        if st.session_state.get("response"):
+            st.success("🧠 GPT의 답변")
+            st.write(st.session_state.response)
