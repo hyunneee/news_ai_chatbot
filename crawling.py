@@ -23,45 +23,6 @@ def crawl_titles_presses_links():
     links = []
     seen = set()
     
-    # for press_tag in soup.select('a[href*="media.naver.com/press"] > span'):
-    #       press = press_tag.text.strip()
-    #       presses.append(press)
-    #       # if press not in presses:
-    #       #     presses.append(press)
-    
-    # print(presses)
-    # print(len(presses))
-    # for item in soup.select('div.sds-comps-full-layout'):
-    #     try:
-    #         title_tag = item.select_one('span.sds-comps-text-type-headline1')
-    #         if not title_tag:
-    #             continue
-
-    #         title = title_tag.text.strip()
-
-    #         # a 태그는 span 위쪽에 있으므로 부모 또는 select로 탐색
-    #         link = title_tag.find_parent('a')['href']
-
-            
-    #         titles.append(title)
-    #         links.append(link)
-            
-    #     except Exception as e:
-    #         print("에러:", e)
-    #         continue
-
-    # print(f"✅ 크롤링된 뉴스 수: {len(titles)}")
-    # # 중복 제거 (title을 기준으로 하나의 dict으로 압축)
-    # unique_titles = []
-    # unique_links = []
-    
-    # for t, l in zip(titles, links):
-    #     if t not in seen:
-    #         seen.add(t)
-    #         unique_titles.append(t)
-    #         unique_links.append(l)
-    
-    # titles, links = unique_titles, unique_links
     for item in soup.select('div.sds-comps-full-layout'):
       try:
           # 제목
@@ -94,57 +55,6 @@ def crawl_titles_presses_links():
     print(f"[크롤링된 언론사 목록]: {presses}")
 
     return titles, presses, links
-
-# def crawl_titles_presses_links():
-#   headers = {'user-agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/114.0.0.0 Safari/537.36'}
-#   url = f'https://search.naver.com/search.naver?where=news&sm=tab_jum&query=AI'
-#   response = requests.get(headers=headers, url=url)
-
-#   soup = BeautifulSoup(response.text, 'html.parser')
-#   info_list = soup.select('.info_group')
-  
-#   titles = []
-#   presses = []
-#   links = []
-#   for i in range(len(info_list)):
-#     press = info_list[i].select_one('a').text
-#     if press[-6:] == '언론사 선정':
-#       press = press[:-6]
-#     title = soup.select('.news_contents')[i].select_one('.news_tit').text
-#     try:
-#       link = info_list[i].select('a')[1].attrs['href']
-#     except:
-#       continue
-    
-#     titles.append(title)
-#     presses.append(press)
-#     links.append(link)
-    
-#   return titles, presses, links
-
-# def crawl_titles_presses_links():
-#     headers = {'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36'}
-#     url = 'https://search.naver.com/search.naver?where=news&query=금융'
-#     response = requests.get(headers=headers, url=url)
-#     soup = BeautifulSoup(response.text, 'html.parser')
-
-#     titles = []
-#     presses = []
-#     links = []
-
-#     for item in soup.select('div.news_area'):
-#         try:
-#             title = item.select_one('a.news_tit').text
-#             link = item.select_one('a.news_tit')['href']
-#             press = item.select_one('.info_group > a.press').text
-#         except:
-#             continue
-
-#         titles.append(title)
-#         links.append(link)
-#         presses.append(press)
-
-#     return titles, presses, links
 
 ###################################################################
 

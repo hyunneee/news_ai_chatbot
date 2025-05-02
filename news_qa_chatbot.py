@@ -31,36 +31,6 @@ with st.sidebar:
     selected = st.radio("기사를 선택하세요", options=titles[:10])
 
 # 뉴스 선택 시 처리
-# if selected:
-#     idx = titles.index(selected)
-#     title = titles[idx]
-#     press = presses[idx]
-#     link = links[idx]
-#     news_text, date = extract_news(link)
-
-#     st.subheader(f"📌 {title}")
-#     st.markdown(f"🗓️ {date} | 🏷️ {press}")
-#     with st.expander("📰 기사 전문 보기"):
-#         st.write(news_text)
-
-#     user_input = st.text_input("궁금한 점을 입력하세요 (예: 요약해줘)", key="question")
-
-#     if user_input:
-#         with st.spinner("🤖 GPT가 답변 중입니다..."):
-#             try:
-#                 completion = client.chat.completions.create(
-#                     model="gpt-3.5-turbo",
-#                     messages=[
-#                         {"role": "system", "content": "너는 사용자 질문에 간결하고 친절하게 요약/답변해주는 금융 뉴스 챗봇이야. 답변은 3문장 이내로 해줘."},
-#                         {"role": "user", "content": f"다음 뉴스 내용을 참고해서 질문에 답해줘:\n\n{news_text}\n\n질문: {user_input}"}
-#                     ]
-#                 )
-#                 response = completion.choices[0].message.content
-#                 st.success("🧠 GPT의 답변")
-#                 st.write(response)
-#             except Exception as e:
-#                 st.error(f"❌ 오류 발생: {str(e)}")
-# 뉴스 선택 시 처리
 if selected:
     idx = titles.index(selected)
     title = titles[idx]
