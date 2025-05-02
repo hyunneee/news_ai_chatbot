@@ -1,0 +1,20 @@
+# ❌ Git에 포함하지 않을 파일 목록
+
+# 환경 변수 파일
+.env
+.env2
+
+*.txt
+test.py
+news_qa_chatbot copy.py
+
+# 파이썬 캐시
+__pycache__/
+*.pyc
+
+# Jupyter Notebook 체크포인트
+.ipynb_checkpoints/
+
+# OS 별 숨김 파일
+.DS_Store
+Thumbs.db
