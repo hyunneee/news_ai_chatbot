@@ -48,7 +48,14 @@ if selected:
             st.session_state.question = ""
             st.session_state.response = ""
 
-        st.subheader(f"📌 {title}")
+        # st.subheader(f"📌 [{title}]({link})")
+        st.markdown(
+            f"""<h3 style="margin:0; font-weight:600;">
+                📌 <a href="{link}" target="_blank" style="text-decoration: none; color: inherit;">{title}</a>
+            </h3>""",
+            unsafe_allow_html=True
+        )
+
         st.markdown(f"🗓️ {date} | 🏷️ {press}")
         with st.expander("📰 기사 전문 보기"):
             st.write(news_text)

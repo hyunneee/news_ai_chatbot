@@ -3,7 +3,7 @@
 # 환경 변수 파일
 .env
 .env2
-secrets.toml
+.streamlit/secrets.toml
 
 *.txt
 !requirements.txt
